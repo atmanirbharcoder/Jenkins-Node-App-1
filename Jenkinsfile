@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image using the Dockerfile in the repo
-                    docker.build('Jenkins-Node-App-1:latest')
+                    sudo docker.build('Jenkins-Node-App-1:latest')
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     // Run the tests inside a container
-                    docker.image('Jenkins-Node-App-1:latest').inside {
+                    sudo docker.image('Jenkins-Node-App-1:latest').inside {
                         sh 'npm test'
                     }
                 }
@@ -33,7 +33,7 @@ pipeline {
             steps {
                 script {
                     // Optionally build the application, e.g., for production
-                    docker.image('Jenkins-Node-App-1:latest').inside {
+                    sudo docker.image('Jenkins-Node-App-1:latest').inside {
                         sh 'npm run build'
                     }
                 }
