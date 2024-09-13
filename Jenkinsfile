@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image using the Dockerfile in the repo
-                    sudo docker.build('Jenkins-Node-App-1:latest')
+                    docker.build('Jenkins-Node-App-1:latest')
                 }
             }
         }
@@ -22,8 +22,9 @@ pipeline {
             steps {
                 script {
                     // Run the tests inside a container
-                    sudo docker.image('Jenkins-Node-App-1:latest').inside {
-                        sh 'npm test'
+                    docker.image('Jenkins-Node-App-1:latest').inside {
+                        sh 'npm install'  // Ensure dependencies are installed before running tests
+                        sh 'npm test'     // Run tests
                     }
                 }
             }
@@ -32,8 +33,8 @@ pipeline {
         stage('Build Application') {
             steps {
                 script {
-                    // Optionally build the application, e.g., for production
-                    sudo docker.image('Jenkins-Node-App-1:latest').inside {
+                    // Build the application, e.g., for production
+                    docker.image('Jenkins-Node-App-1:latest').inside {
                         sh 'npm run build'
                     }
                 }
@@ -43,7 +44,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                // You can add your Docker deployment commands here
+                // Add Docker deployment commands, e.g., pushing to a registry or starting a container
             }
         }
     }
