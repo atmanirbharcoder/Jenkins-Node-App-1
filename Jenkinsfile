@@ -9,7 +9,17 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Docker Image1.0') {
+            steps {
+                script {
+                    // Build the Docker image using the Dockerfile in the repo with sudo
+                    sh 'sudo docker build -t Jenkins-Node-App-1:latest .'
+                }
+            }
+        }
+
+
+        stage('Build Docker Image1.1') {
             steps {
                 script {
                     // Build the Docker image using the Dockerfile in the repo
